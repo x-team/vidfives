@@ -26,6 +26,10 @@ footer a {
   text-decoration: none;
 }
 
+.videorecorder {
+  margin: 40px 0px;
+}
+
 .column,
 .columns {
   width: 100%;
