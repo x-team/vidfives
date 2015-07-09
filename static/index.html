@@ -3,10 +3,18 @@
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400,600,700,300' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" type="text/css" href="style.css">
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="dialog.css">
+		<link rel="stylesheet" type="text/css" href="dialog-sandra.css">
+		<script src="js/modernizr.custom.js"></script>
+
 		<title>/vidfives</title>
   	</head>
 	<body>
+
 		<div class="container">
+
+			<!-- code to launch dialog -->
+			<!-- <button data-dialog="somedialog" class="trigger">Open</button> -->
 
 			<div class="header">
 				<h1>/vidfives</h1>
@@ -39,6 +47,32 @@
 				<a id="downloadurl">Download</a>
 				<div id="progressNumber"></div>
 			</div>
+
+
+				<div id="somedialog" class="dialog">
+					<div class="dialog__overlay"></div>
+					<div class="dialog__content">
+						<h2><strong>Awesome</strong>, your /vidfive was sent.</h2>
+						<div>
+							<button class="action" data-dialog-close>Send another!</button>
+							<button class="action" data-dialog-close>Close</button>
+						</div>
+					</div>
+				</div>
+
+			<script src="js/classie.js"></script>
+			<script src="js/dialogFx.js"></script>
+			<script>
+				(function() {
+
+					var dlgtrigger = document.querySelector( '[data-dialog]' ),
+						somedialog = document.getElementById( dlgtrigger.getAttribute( 'data-dialog' ) ),
+						dlg = new DialogFx( somedialog );
+
+					dlgtrigger.addEventListener( 'click', dlg.toggle.bind(dlg) );
+
+				})();
+			</script>
 
 			<script src="vendor/Html5_Video_Audio_Recorder/whammy.js" type="text/javascript"></script>
 			<script src="vendor/Html5_Video_Audio_Recorder/recorder.js" type="text/javascript"></script>
