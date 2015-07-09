@@ -11,6 +11,19 @@
   	</head>
 	<body>
 
+
+		<script type="text/javascript">
+			    function toggle_visibility(id,hideme) {
+			       var f = document.getElementById(hideme);
+			       f.style.display = 'none';
+			       var e = document.getElementById(id);
+			       if(e.style.display == 'block')
+			          e.style.display = 'none';
+			       else
+			          e.style.display = 'block';
+			    }
+		</script>
+
 		<div class="container">
 
 			<!-- code to launch dialog -->
@@ -26,16 +39,16 @@
 				<video id="viredemovideoele" class="thevideo" ></video>
 			</div>
 
-			<div>
+			<div id="recordbtns">
 				<a href="#" id="startRecrodBut1" class="button" /><i class="fa fa-video-camera"></i> Record</a>
-				<a href="#" id="stopRecBut1" class="button" /><i class="fa fa-stop"></i> Stop</a>
-				<a href="#" id="clearrecording" class="button"  /><i class="fa fa-undo"></i> Reset</a>
+				<a href="#" onclick="toggle_visibility('replay','recordbtns');" id="stopRecBut1" class="button" /><i class="fa fa-stop"></i> Stop</a>
 			</div>
 
 			<!-- only display after recording -->
-			<div>
+			<div id="replay" class="replay">
 				<a href="#" id="playback" class="button" /><i class="fa fa-play"></i> Play</a>
 				<a href="#" id="uploadrecord" class="button" /><i class="fa fa-check"></i> Save</a>
+				<a href="#" onclick="toggle_visibility('recordbtns','replay');" id="clearrecording" class="button"  /><i class="fa fa-undo"></i> Reset</a>
 			</div>
 
 			<!-- hide to user -->

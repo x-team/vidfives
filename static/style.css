@@ -34,6 +34,10 @@ footer a {
   border: 22px solid #f0f0f0;
 }
 
+.replay {
+  display:none;
+}
+
 .column,
 .columns {
   width: 100%;
