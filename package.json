@@ -13,6 +13,7 @@
     "cuid": "^1.2.5",
     "ecstatic": "^0.8.0",
     "formidable": "^1.0.17",
-    "http-hash-router": "^1.1.0"
+    "http-hash-router": "^1.1.0",
+    "slack-node": "^0.1.3"
   }
 }

@@ -45,4 +45,31 @@ window.handleUploadComplete = function () {
 
   dlg.toggle();
   console.log('ID', uploadId);
+
+  var slackNameInput = document.querySelector('[name=slackname]');
+  sendToSlack(slackNameInput.value, uploadId);
+}
+
+function sendToSlack (targetUsername, uploadId) {
+  var xhr = new XMLHttpRequest();
+
+  xhr.addEventListener("load", sendComplete, false);
+  xhr.addEventListener("error", sendFailed, false);
+
+  xhr.open("POST", '/send/' + targetUsername + '/' + uploadId);
+  xhr.send();
+
+  function sendComplete (e) {
+    var res = e.target.responseText;
+    console.log('sendToSlack', res);
+    if (res !== 'ok') {
+      sendFailed();
+    }
+  }
+
+  function sendFailed () {
+    alert('Sorry, sending to slack failed :( Try sharing the link manually');
+  }
+
+
 }

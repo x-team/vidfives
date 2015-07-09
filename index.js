@@ -30,5 +30,6 @@ var server = http.createServer(function (req, res) {
 
 require('./routes/upload')(router);
 require('./routes/play')(router);
+require('./routes/send')(router);
 
 server.listen(port);
