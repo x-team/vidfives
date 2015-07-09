@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+  </head>
+  <body>
+    <video>
+      Your browser does not support the <code>video</code> element.
+    </video>
+    <audio></audio>
+
+  <script>
+  var id = {{ id }};
+  var audioElement = document.querySelector('audio');
+var videoElement = document.querySelector('video');
+
+videoElement.autoplay = true;
+videoElement.src = '/video/' + id;
+audioElement.src = '/audio/' + id;
+videoAudioSync = setTimeout(function(){
+  audioElement.currentTime = videoElement.currentTime;
+  audioElement.play();
+      },100);
+    </script>
+  </body>
+</html>
