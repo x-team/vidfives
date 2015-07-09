@@ -30,6 +30,10 @@ footer a {
   margin: 40px 0px;
 }
 
+.thevideo {
+  border: 22px solid #f0f0f0;
+}
+
 .column,
 .columns {
   width: 100%;
