@@ -35,7 +35,7 @@ module.exports = function (router) {
         // TODO: validate filename and other file data
         // ...
 
-        var out = fs.createWriteStream(uploads_dir + target_path);
+        var out = fs.createWriteStream(uploads_dir + target_path, { flags: 'a+' });
         out.on('error', function (err) {
           console.error('error writing upload', {
             err: err,
