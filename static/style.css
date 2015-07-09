@@ -169,10 +169,6 @@ p {
   font-size: 3.6rem; 
   letter-spacing: -.1rem; 
   color: #f0f0f0;
-  right: -281px;
-  top: -180px;
-  position: relative;
-  z-index: 1;
 }
 
 /* Links
