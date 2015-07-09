@@ -38,6 +38,14 @@ footer a {
   display:none;
 }
 
+.slackname{
+  font-family: "Noto Serif",Helvetica,Arial; 
+  font-size: 1.8rem; 
+  letter-spacing: -.05rem; 
+  color:#c3c3c3;
+  width: 50%;
+}
+
 .column,
 .columns {
   width: 100%;
