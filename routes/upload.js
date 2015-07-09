@@ -3,6 +3,11 @@ var fs = require('fs');
 var url = require('url');
 var path = require('path');
 
+function sanitizeFilename (filename) {
+  // strip out any characters outside the whitelist
+  return filename.replace(/[^\.a-zA-Z0-9_\,\~\-]+/g, '');
+}
+
 var allowedFileTypes = ['.wav', '.webm'];
 
 module.exports = function (router) {
