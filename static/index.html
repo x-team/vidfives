@@ -34,10 +34,12 @@
 				<h5><i>Send a more personal high-five</i></h5>
 			</div>
 
-	    	<div id="videorecorder" class="videorecorder">
+	    <div id="videorecorder" class="videorecorder">
 				<span id="countdown" class="countdown"></span>
 				<video id="viredemovideoele" class="thevideo" ></video>
 			</div>
+
+      <h6 id="progress-msg" style="display: none">Saving in progress...</h6>
 
 			<div id="recordbtns">
 				<a href="#" id="startRecrodBut1" class="button" /><i class="fa fa-video-camera"></i> Record</a>
@@ -136,7 +138,9 @@
 	         });
 
 	        uploadrecording.addEventListener("click" , function(event){
-                    event.preventDefault();
+          event.preventDefault();
+
+          document.getElementById('progress-msg').style.display = 'block';
 	         	/*
 	         	Uploading the content to the server, here I have sliced the blobs into chunk size
 	         	of 1048576 bits so that uploading time will reduce.

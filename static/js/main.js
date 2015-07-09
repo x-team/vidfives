@@ -40,6 +40,9 @@ window.handleUploadComplete = function () {
   var linkNode = document.querySelector('.dialog__sharelink');
   linkNode.setAttribute('href', '/play/' + uploadId);
 
+  // hide the progress msg
+  document.getElementById('progress-msg').style.display = 'none';
+
   dlg.toggle();
   console.log('ID', uploadId);
 }
