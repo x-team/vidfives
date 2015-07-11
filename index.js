@@ -42,6 +42,7 @@ var server = http.createServer(function (req, res) {
   }
 });
 
+require('./routes/home')(router, config);
 require('./routes/upload')(router, config);
 require('./routes/play')(router, config);
 require('./routes/send')(router, config);
