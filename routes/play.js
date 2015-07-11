@@ -2,15 +2,11 @@ var fs = require('fs');
 var path = require('path');
 var ecstatic = require('ecstatic');
 
-var serveVideo = ecstatic({
+var serveMedia = ecstatic({
   root: path.join(__dirname, '..', 'user-data')
 });
 
-var serveAudio = ecstatic({
-  root: path.join(__dirname, '..', 'user-data')
-});
-
-var tpl = fs.readFileSync(__dirname + '/../static/play.html', 'utf8');
+var tpl = fs.readFileSync(__dirname + '/../dist/play.html', 'utf8');
 
 module.exports = function (router) {
   router.set('/play/:id', {
@@ -27,7 +23,7 @@ module.exports = function (router) {
     GET: function (req, res, opts, cb) {
       var id = opts.params.id;
       req.url = '/' +  id + '.webm';
-      return serveVideo(req, res);
+      return serveMedia(req, res);
     }
   });
 
@@ -35,7 +31,7 @@ module.exports = function (router) {
     GET: function (req, res, opts, cb) {
       var id = opts.params.id;
       req.url = '/' + id + '.wav';
-      return serveAudio(req, res);
+      return serveMedia(req, res);
     }
   });
 };

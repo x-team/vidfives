@@ -1,14 +1,14 @@
 var ecstatic = require('ecstatic');
 var http = require('http');
+var path = require('path');
 var url = require('url');
 var Router = require('http-hash-router');
-var handleUpload = require('./lib/handle-upload');
 
 var port = process.env.PORT || 8000;
 
 var router = new Router();
 var serveStaticFiles = ecstatic({
-  root: __dirname + '/static'
+  root: path.join(__dirname, 'dist')
 });
 
 var server = http.createServer(function (req, res) {
