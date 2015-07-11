@@ -9,7 +9,7 @@ const App = React.createClass({
     return (
       <div>
         <Recorder />
-        <Controls saveInProgress={true} />
+        <Controls />
       </div>
     );
   }
