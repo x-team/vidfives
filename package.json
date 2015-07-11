@@ -8,7 +8,7 @@
     "clean": "rm -fR dist",
     "prebuild": "npm run clean && mkdir -p dist",
     "build": "cp -R src/assets/* dist/ && npm run build-js",
-    "build-js": "browserify -t babelify -p [ css-modulesify -o dist/main-home.css ] -o dist/main-home.js src/main-home.js",
+    "build-js": "watchify -v -t babelify -p [ css-modulesify -o dist/main-home.css ] -o dist/main-home.js src/main-home.js",
     "lint": "eslint src/ routes/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -29,6 +29,7 @@
     "browserify": "^10.2.6",
     "css-modulesify": "^0.3.3",
     "eslint": "^0.24.1",
-    "eslint-plugin-react": "^2.7.0"
+    "eslint-plugin-react": "^2.7.0",
+    "watchify": "^3.2.3"
   }
 }

@@ -6,7 +6,8 @@ module.exports = React.createClass({
 
   getInitialState () {
     return {
-      isRecording: false
+      isRecording: false,
+      hasRecorded: false
     }
   },
 
@@ -19,9 +20,18 @@ module.exports = React.createClass({
 
   onClickStop (event) {
     event.preventDefault();
-    this.setState({ isRecording: false });
+    this.setState({
+      isRecording: false,
+      hasRecorded: true
+    });
 
     window.stopRecording();
+  },
+
+  onClickPlay (event) {
+    event.preventDefault();
+
+    window.playVid();
   },
 
   render () {
@@ -29,12 +39,12 @@ module.exports = React.createClass({
       return <h6 className={styles.progress}>Saving in progress...</h6>;
     }
 
-    if (this.props.hasRecorded) {
+    if (this.state.hasRecorded) {
       return (
-        <div id="replay" class="replay">
+        <div>
           <input name="slackname" placeholder="Enter Slack username of recipient here."/>
 
-          <button><span className="fa fa-play"/> Play</button>
+          <button onClick={this.onClickPlay}><span className="fa fa-play"/> Play</button>
           <button><span className="fa fa-check"/> Send</button>
           <button><span className="fa fa-undo"/> Reset</button>
         </div>

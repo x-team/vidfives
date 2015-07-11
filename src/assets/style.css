@@ -30,15 +30,6 @@ footer a {
   text-decoration: none;
 }
 
-.videorecorder {
-  margin: 40px 0px;
-}
-
-.videorecorder video {
-  border: 22px solid #f0f0f0;
-  margin: 0px 0px 20px;
-}
-
 .replay {
   display:none;
 }
