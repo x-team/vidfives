@@ -8,6 +8,7 @@
     "clean": "rm -fR dist",
     "prebuild": "npm run clean && mkdir -p dist",
     "build": "cp -R src/assets/* dist/",
+    "lint": "eslint src/ routes/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "joshwnj",
@@ -17,5 +18,9 @@
     "formidable": "^1.0.17",
     "http-hash-router": "^1.1.0",
     "slack-node": "^0.1.3"
+  },
+  "devDependencies": {
+    "eslint": "^0.24.1",
+    "eslint-plugin-react": "^2.7.0"
   }
 }

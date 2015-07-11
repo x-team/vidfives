@@ -6,11 +6,11 @@ var serveMedia = ecstatic({
   root: path.join(__dirname, '..', 'user-data')
 });
 
-var tpl = fs.readFileSync(__dirname + '/../dist/play.html', 'utf8');
+var tpl = fs.readFileSync(path.join(__dirname, '..', 'dist', 'play.html'), 'utf8');
 
 module.exports = function (router) {
   router.set('/play/:id', {
-    GET: function (req, res, opts, cb) {
+    GET: function (req, res, opts) {
       var id = opts.params.id;
       res.writeHead(200, {
         'Content-Type': 'text/html'
@@ -20,15 +20,15 @@ module.exports = function (router) {
   });
 
   router.set('/video/:id', {
-    GET: function (req, res, opts, cb) {
+    GET: function (req, res, opts) {
       var id = opts.params.id;
-      req.url = '/' +  id + '.webm';
+      req.url = '/' + id + '.webm';
       return serveMedia(req, res);
     }
   });
 
   router.set('/audio/:id', {
-    GET: function (req, res, opts, cb) {
+    GET: function (req, res, opts) {
       var id = opts.params.id;
       req.url = '/' + id + '.wav';
       return serveMedia(req, res);

@@ -12,7 +12,7 @@ var allowedFileTypes = ['.wav', '.webm'];
 
 module.exports = function (router) {
   router.set('/upload', {
-    POST: function (req, res, opts, cb) {
+    POST: function (req, res) {
       var query = url.parse(req.url, true).query;
       var ext = path.extname(query.filename);
       if (allowedFileTypes.indexOf(ext) === -1) {
@@ -27,15 +27,15 @@ module.exports = function (router) {
           return form.handlePart(part);
         }
 
-        var uploads_dir = __dirname + '/../user-data/';
-        var target_filename = sanitizeFilename(query.filename);
-        var target_path = [target_filename].join('-');
+        var uploadsDir = path.join(__dirname, '..', 'user-data');
+        var targetFilename = sanitizeFilename(query.filename);
+        var targetPath = [targetFilename].join('-');
 
 
         // TODO: validate filename and other file data
         // ...
 
-        var out = fs.createWriteStream(uploads_dir + target_path, { flags: 'a+' });
+        var out = fs.createWriteStream(path.join(uploadsDir, targetPath), { flags: 'a+' });
         out.on('error', function (err) {
           console.error('error writing upload', {
             err: err,
@@ -46,9 +46,9 @@ module.exports = function (router) {
         part.pipe(out);
       };
 
-      form.parse(req, function (err, fields, files) {
+      form.parse(req, function (err) {
         if (err) {
-          logger.error('error parsing form', {
+          console.error('error parsing form', {
             err: err
           });
           res.writeHead(500, {'content-type': 'text/plain'});
