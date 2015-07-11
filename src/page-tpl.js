@@ -24,13 +24,11 @@ module.exports = function (contentElems) {
       stylesheet('//fonts.googleapis.com/css?family=Open+Sans:300italic,400,600,700,300'),
       stylesheet('//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'),
       stylesheet('/style.css'),
+      stylesheet('/main-home.css'),
       stylesheet('/dialog.css'),
       stylesheet('/dialog-sandra.css'),
       script('/js/modernizr.custom.js')
     ]),
-    h('body', {}, [
-      h('#root', contentElems || []),
-      script('/main.js')
-    ])
+    h('body', contentElems || [])
   ]);
 };

@@ -7,12 +7,16 @@
   max-width: 960px;
   margin: 0 auto;
   padding: 0 20px;
-  box-sizing: border-box; 
+  box-sizing: border-box;
   text-align:center;
 }
 
-.header {
+.container > header {
   margin: 80px 0px 20px 0px;
+}
+
+.container > header > h5 {
+  font-style: italic;
 }
 
 footer {
@@ -30,7 +34,7 @@ footer a {
   margin: 40px 0px;
 }
 
-.thevideo {
+.videorecorder video {
   border: 22px solid #f0f0f0;
   margin: 0px 0px 20px;
 }
@@ -40,9 +44,9 @@ footer a {
 }
 
 .slackname{
-  font-family: "Noto Serif",Helvetica,Arial; 
-  font-size: 1.8rem; 
-  letter-spacing: -.05rem; 
+  font-family: "Noto Serif",Helvetica,Arial;
+  font-size: 1.8rem;
+  letter-spacing: -.05rem;
   color:#c3c3c3;
   width: 50%;
 }
@@ -167,8 +171,8 @@ p {
   margin-top: 0; }
 
 .countdown {
-  font-size: 3.6rem; 
-  letter-spacing: -.1rem; 
+  font-size: 3.6rem;
+  letter-spacing: -.1rem;
   color: #f0f0f0;
 }
 
