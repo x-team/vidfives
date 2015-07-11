@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node .",
     "clean": "rm -fR dist",
-    "prebuild": "npm run clean && mkdir -p ./dist",
-    "build": "cp -R assets/* dist/",
+    "prebuild": "npm run clean && mkdir -p dist",
+    "build": "cp -R src/assets/* dist/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "joshwnj",
