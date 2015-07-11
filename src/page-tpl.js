@@ -18,7 +18,7 @@ module.exports = function (contentElems) {
   return h('html', [
     h('head', {}, [
       h('meta', { charset: 'UTF-8' }),
-      h('title', '/vidfives'),
+      h('title', '/vidfive'),
       h('meta', { name: 'viewport', content: 'width=device-width' }),
 
       stylesheet('//fonts.googleapis.com/css?family=Open+Sans:300italic,400,600,700,300'),

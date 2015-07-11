@@ -1,4 +1,4 @@
-video-fives
+/vidfive
 ====
 
 Install
