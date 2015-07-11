@@ -2,13 +2,14 @@ var fs = require('fs');
 var path = require('path');
 var ecstatic = require('ecstatic');
 
-var serveMedia = ecstatic({
-  root: path.join(__dirname, '..', 'user-data')
-});
+module.exports = function (router, appConfig) {
 
-var tpl = fs.readFileSync(path.join(__dirname, '..', 'dist', 'play.html'), 'utf8');
+  var serveMedia = ecstatic({
+    root: appConfig.uploadsDir
+  });
 
-module.exports = function (router) {
+  var tpl = fs.readFileSync(path.join(appConfig.distDir, 'play.html'), 'utf8');
+
   router.set('/play/:id', {
     GET: function (req, res, opts) {
       var id = opts.params.id;

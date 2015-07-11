@@ -10,7 +10,7 @@ function sanitizeFilename (filename) {
 
 var allowedFileTypes = ['.wav', '.webm'];
 
-module.exports = function (router) {
+module.exports = function (router, appConfig) {
   router.set('/upload', {
     POST: function (req, res) {
       var query = url.parse(req.url, true).query;
@@ -27,15 +27,14 @@ module.exports = function (router) {
           return form.handlePart(part);
         }
 
-        var uploadsDir = path.join(__dirname, '..', 'user-data');
         var targetFilename = sanitizeFilename(query.filename);
         var targetPath = [targetFilename].join('-');
-
 
         // TODO: validate filename and other file data
         // ...
 
-        var out = fs.createWriteStream(path.join(uploadsDir, targetPath), { flags: 'a+' });
+        // need to write in "a+" mode because large files will arrive in chunks
+        var out = fs.createWriteStream(path.join(appConfig.uploadsDir, targetPath), { flags: 'a+' });
         out.on('error', function (err) {
           console.error('error writing upload', {
             err: err,

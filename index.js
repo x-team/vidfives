@@ -4,7 +4,21 @@ var path = require('path');
 var url = require('url');
 var Router = require('http-hash-router');
 
-var port = process.env.PORT || 8000;
+var config = {
+  host: process.env.HOST,
+  port: process.env.PORT || 8000,
+
+  slackToken: process.env.SLACK_TOKEN,
+
+  uploadsDir: path.join(__dirname, 'user-data'),
+  distDir: path.join(__dirname, 'dist')
+};
+
+['host', 'slackToken'].forEach(function (key) {
+  if (!config[key]) {
+    throw new Error('Missing env config: ' + key);
+  }
+});
 
 var router = new Router();
 var serveStaticFiles = ecstatic({
@@ -28,8 +42,9 @@ var server = http.createServer(function (req, res) {
   }
 });
 
-require('./routes/upload')(router);
-require('./routes/play')(router);
-require('./routes/send')(router);
+require('./routes/upload')(router, config);
+require('./routes/play')(router, config);
+require('./routes/send')(router, config);
 
-server.listen(port);
+server.listen(config.port);
+console.log('Ready on http://localhost:%d', config.port);
