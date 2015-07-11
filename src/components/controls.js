@@ -13,11 +13,15 @@ module.exports = React.createClass({
   onClickRecord (event) {
     event.preventDefault();
     this.setState({ isRecording: true });
+
+    window.startRecording();
   },
 
   onClickStop (event) {
     event.preventDefault();
     this.setState({ isRecording: false });
+
+    window.stopRecording();
   },
 
   render () {
