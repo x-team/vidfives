@@ -1,7 +1,7 @@
 var formidable = require('formidable');
 var fs = require('fs');
-var url = require('url');
 var path = require('path');
+var cuid = require('cuid');
 
 function sanitizeFilename (filename) {
   // strip out any characters outside the whitelist
@@ -13,28 +13,29 @@ var allowedFileTypes = ['.wav', '.webm'];
 module.exports = function (router, appConfig) {
   router.set('/upload', {
     POST: function (req, res) {
-      var query = url.parse(req.url, true).query;
-      var ext = path.extname(query.filename);
-      if (allowedFileTypes.indexOf(ext) === -1) {
-        res.writeHead(500);
-        return res.end('invalid file type');
-      }
-
       var form = new formidable.IncomingForm();
+      var id = cuid();
+
       form.onPart = function(part) {
+        console.log('PART', part);
+
         // formidable can handle any non-file parts
         if(!part.filename) {
           return form.handlePart(part);
         }
 
-        var targetFilename = sanitizeFilename(query.filename);
-        var targetPath = [targetFilename].join('-');
+        var ext = '.' + part.name;
+        if (allowedFileTypes.indexOf(ext) === -1) {
+          res.statusCode = 500;
+          return res.end('invalid file type');
+        }
 
-        // TODO: validate filename and other file data
+        var targetFilename = id + ext;
+
+        // TODO: validate file data
         // ...
 
-        // need to write in "a+" mode because large files will arrive in chunks
-        var out = fs.createWriteStream(path.join(appConfig.uploadsDir, targetPath), { flags: 'a+' });
+        var out = fs.createWriteStream(path.join(appConfig.uploadsDir, targetFilename), { flags: 'w+' });
         out.on('error', function (err) {
           console.error('error writing upload', {
             err: err,
@@ -55,14 +56,15 @@ module.exports = function (router, appConfig) {
           return;
         }
 
-        res.writeHead(200, {'content-type': 'text/plain'});
-        res.end('ok');
+        res.writeHead(200, {'content-type': 'application/json'});
+        res.end(JSON.stringify({ id: id }));
       });
 
       req.on('error', function (err) {
         console.error('request error', {
           err: err
         });
+        res.end();
       });
 
       req.on('aborted', function () {

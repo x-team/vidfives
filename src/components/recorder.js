@@ -1,78 +1,67 @@
 import React from 'react';
-import getUserMedia from 'getusermedia';
-import recordRTC from 'recordrtc';
 
 import styles from './recorder.css';
 
 module.exports = React.createClass({
   displayName: 'Recorder',
 
-  componentDidMount () {
-    const self = this;
-
-    const mediaOpts = {
-      video: true,
-      audio: true
+  getDefaultProps () {
+    return {
+      playback: false
     };
-    navigator.getUserMedia(mediaOpts, function (stream) {
-      const videoNode = self.refs.video.getDOMNode();
-      videoNode.src = window.URL.createObjectURL(stream);
-      videoNode.muted = true;
+  },
 
-      var recorder = recordRTC(stream, { type: 'video' });
-      window.recorder = recorder;
-      window.recordRTC = recordRTC;
+  componentDidMount () {
+    this.update(this.props);
+  },
 
-      var audioRecorder = recordRTC(stream, { type: 'audio' });
-      var audioNode = document.createElement('audio');
-      document.body.appendChild(audioNode);
-      audioNode.setAttribute('autoPlay', true);
+  componentWillReceiveProps (newProps) {
+    this.update(newProps);
+  },
 
-      window.startRecording = function () {
-        recorder.startRecording();
-        audioRecorder.startRecording();
-      };
+  shouldComponentUpdate () {
+    // once the video & audio nodes have been rendered we never want to
+    // re-render (otherwise it flickers). Instead we set the src directly
+    // on the DOM nodes in `updateVideo`.
+    return false;
+  },
 
-      var videoUrl;
-      var audioUrl;
+  update (props) {
+    const videoNode = this.refs.video.getDOMNode();
+    const audioNode = this.refs.audio.getDOMNode();
 
-      window.playVid = function () {
-        videoNode.muted = false;
-        videoNode.src = videoUrl;
+    // if we have a recording, start video and audio in sync
+    if (props.playback) {
+      if (props.videoUrl && props.audioUrl) {
+        videoNode.pause();
 
-        setTimeout(function(){
+        if (videoNode.src !== props.videoUrl) {
+          videoNode.src = props.videoUrl;
+
           audioNode.currentTime = videoNode.currentTime;
-          audioNode.src = audioUrl;
-        },100);
-      };
+          audioNode.src = props.audioUrl;
+        }
 
-      window.stopRecording = function () {
-
-        audioRecorder.stopRecording(function (url) {
-          audioUrl = url;
-        });
-
-        recorder.stopRecording(function onStopRecording (url) {
-          videoUrl = url;
-
-          var blob = recorder.getBlob();
-          recorder.getDataURL(function (dataURL) {
-            window.dataURL = dataURL;
-            console.log('got data URL');
-          });
-        });
-      };
-
-    }, function (err) {
-      alert('Sorry, video capture is not supported in your browser');
-    });
+        videoNode.play();
+        audioNode.play();
+      }
+    }
+    // otherwise just set the video url to the media stream
+    else if (props.stream) {
+      videoNode.src = window.URL.createObjectURL(props.stream);
+      videoNode.play();
+    }
+    // if there's no attached media stream, pause the playback
+    else {
+      videoNode.pause();
+    }
   },
 
   render () {
     return (
       <div className={styles.root}>
-        <video className={styles.video} ref="video" autoPlay={true} />
-        <span className="countdown" />
+        <video className={styles.video} ref="video" autoPlay={false} muted={true} />
+        <audio style={{display: 'none'}} ref="audio" autoPlay={false} />
       </div>
     );
   }
