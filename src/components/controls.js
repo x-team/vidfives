@@ -49,17 +49,17 @@ module.exports = React.createClass({
     if (this.props.hasRecorded) {
       return (
         <div>
-          <input name="slackname" placeholder="Enter Slack username of recipient here."/>
+          <input className={styles.slackname} name="slackname" placeholder="Enter Slack username of recipient here."/>
 
-          <button onClick={this.onClickPlay}><span className="fa fa-play"/> Play</button>
-          <button onClick={this.onClickSave}><span className="fa fa-check"/> Save</button>
-          <button onClick={this.onClickReset}><span className="fa fa-undo"/> Reset</button>
+          <button className={styles.button} onClick={this.onClickPlay}><span className="fa fa-play"/> Play</button>
+          <button className={styles.button}  onClick={this.onClickSave}><span className="fa fa-check"/> Save</button>
+          <button className={styles.button}  onClick={this.onClickReset}><span className="fa fa-undo"/> Reset</button>
         </div>
       );
     }
 
     return this.props.isRecording ?
-      <button onClick={this.onClickStop}><span className="fa fa-stop"/> Stop</button> :
-      <button onClick={this.onClickRecord}><span className="fa fa-video-camera"/> Record</button>;
+      <button className={styles.button} onClick={this.onClickStop}><span className="fa fa-stop"/> Stop</button> :
+      <button className={styles.button} onClick={this.onClickRecord}><span className="fa fa-video-camera"/> Record</button>;
   }
 });
