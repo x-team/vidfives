@@ -15,6 +15,7 @@ var tpl = require('../src/page-tpl')([
       ])
     ]),
   ]),
+  h('script', { src: '/js/RecordRTC.min.js' }),
   h('script', { src: '/main-home.js' })
 ]);
 

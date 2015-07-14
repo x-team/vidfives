@@ -3,9 +3,10 @@ import Controls from './components/controls';
 import Recorder from './components/recorder';
 import Dialog from './components/dialog';
 
-import getUserMedia from 'getusermedia';
-import recordRTC from 'recordrtc';
 import xhr from 'xhr';
+
+// recordrtc wants to be global
+const recordRTC = window.RecordRTC;
 
 function setupVideoRecorder (stream) {
   const recorder = recordRTC(stream, { type: 'video' });

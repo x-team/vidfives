@@ -17,8 +17,6 @@ module.exports = function (router, appConfig) {
       var id = cuid();
 
       form.onPart = function(part) {
-        console.log('PART', part);
-
         // formidable can handle any non-file parts
         if(!part.filename) {
           return form.handlePart(part);

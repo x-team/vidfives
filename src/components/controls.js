@@ -16,32 +16,15 @@ module.exports = React.createClass({
     };
   },
 
-  onClickRecord (event) {
-    event.preventDefault();
-    this.props.action('startRecording');
-  },
-
-  onClickStop (event) {
-    event.preventDefault();
-    this.props.action('stop');
-  },
-
-  onClickPlay (event) {
-    event.preventDefault();
-    this.props.action('play');
-  },
-
-  onClickReset (event) {
-    event.preventDefault();
-    this.props.action('reset');
-  },
-
-  onClickSave (event) {
-    event.preventDefault();
-    this.props.action('save');
-  },
-
   render () {
+    const self = this;
+    const click = function (type) {
+      return function (event) {
+        event.preventDefault();
+        self.props.action(type);
+      };
+    };
+
     if (this.props.saveInProgress) {
       return <h6 className={styles.progress}>Saving in progress...</h6>;
     }
@@ -49,17 +32,17 @@ module.exports = React.createClass({
     if (this.props.hasRecorded) {
       return (
         <div>
-          <input className={styles.slackname} name="slackname" placeholder="Enter Slack username of recipient here."/>
+          <input className={styles.slackname} placeholder="Enter Slack username of recipient here."/>
 
-          <button className={styles.button} onClick={this.onClickPlay}><span className="fa fa-play"/> Play</button>
-          <button className={styles.button}  onClick={this.onClickSave}><span className="fa fa-check"/> Save</button>
-          <button className={styles.button}  onClick={this.onClickReset}><span className="fa fa-undo"/> Reset</button>
+          <button className={styles.button} onClick={click('play')}><span className="fa fa-play"/> Play</button>
+          <button className={styles.button}  onClick={click('save')}><span className="fa fa-check"/> Send</button>
+          <button className={styles.button}  onClick={click('reset')}><span className="fa fa-undo"/> Reset</button>
         </div>
       );
     }
 
     return this.props.isRecording ?
-      <button className={styles.button} onClick={this.onClickStop}><span className="fa fa-stop"/> Stop</button> :
-      <button className={styles.button} onClick={this.onClickRecord}><span className="fa fa-video-camera"/> Record</button>;
+      <button className={styles.button} onClick={click('stop')}><span className="fa fa-stop"/> Stop</button> :
+      <button className={styles.button} onClick={click('startRecording')}><span className="fa fa-video-camera"/> Record</button>;
   }
 });
