@@ -1,6 +1,7 @@
 import React from 'react';
 import Controls from './components/controls';
 import Recorder from './components/recorder';
+import Dialog from './components/dialog';
 
 import getUserMedia from 'getusermedia';
 import recordRTC from 'recordrtc';
@@ -23,7 +24,8 @@ const App = React.createClass({
 
   getInitialState () {
     return {
-      stage: 'init'
+      stage: 'init',
+      savedId: null
     };
   },
 
@@ -125,6 +127,23 @@ const App = React.createClass({
     }
   },
 
+  onDialogAction (type) {
+    switch (type) {
+    case 'another':
+    case 'close':
+      this.setState({
+        stage: 'init',
+        videoUrl: null,
+        audioUrl: null,
+        savedId: null
+      });
+      break;
+
+    default:
+      console.error('Unknown dialog action:', type);
+    }
+  },
+
   renderRecorder () {
     const props = {
       stream: this.state.mediaStream,
@@ -166,11 +185,7 @@ const App = React.createClass({
     const id = this.state.savedId;
     if (!id) { return null; }
 
-    return (
-        <div>
-        Congrats, saved your vid: {id}
-      </div>
-    );
+    return <Dialog id={id} action={this.onDialogAction} />;
   },
 
   render () {
