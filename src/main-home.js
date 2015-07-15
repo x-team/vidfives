@@ -68,7 +68,27 @@ const App = React.createClass({
     this.setState({ stage: 'recordingComplete' });
   },
 
-  save () {
+  send ({ slackname, savedId }) {
+    const self = this;
+    const opts = {
+      method: 'POST',
+      url: `/send/${slackname}/${savedId}`
+    };
+
+    xhr(opts, function (err, res, body) {
+      if (err) {
+        console.error(err);
+        alert('Sorry, sending to slack failed. Try sharing the link manually instead.');
+        return;
+      }
+
+      self.setState({ savedId });
+    });
+  },
+
+  save (args) {
+    args = args || {};
+    const { slackname } = args;
     const self = this;
     const { videoRecorder, audioRecorder } = this.state;
     const videoBlob = videoRecorder.getBlob();
@@ -94,14 +114,21 @@ const App = React.createClass({
         return;
       }
 
-      var data = JSON.parse(body);
-      self.setState({
-        savedId: data.id
-      });
+      const data = JSON.parse(body);
+      const savedId = data.id;
+
+      // send to slack
+      if (slackname) {
+        self.send({ slackname, savedId });
+      }
+      // sending to slack is optional, so might just show the manual share link
+      else {
+        self.setState({ savedId });
+      }
     });
   },
 
-  onControlsAction (type) {
+  onControlsAction (type, args) {
     switch (type) {
     case 'startRecording':
       this.startRecording();
@@ -124,7 +151,7 @@ const App = React.createClass({
       break;
 
     case 'save':
-      this.save();
+      this.save(args);
       break;
 
     default:

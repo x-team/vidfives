@@ -16,6 +16,14 @@ module.exports = React.createClass({
     };
   },
 
+  onClickSend: function (event) {
+    event.preventDefault();
+
+    const slacknameNode = this.refs.slackname.getDOMNode();
+    const slackname = slacknameNode.value;
+    this.props.action('save', { slackname });
+  },
+
   render () {
     const self = this;
     const click = function (type) {
@@ -32,10 +40,10 @@ module.exports = React.createClass({
     if (this.props.hasRecorded) {
       return (
         <div>
-          <input className={styles.slackname} placeholder="Enter Slack username of recipient here."/>
+          <input className={styles.slackname} ref="slackname" placeholder="Enter Slack username of recipient here."/>
 
           <button className={styles.button} onClick={click('play')}><span className="fa fa-play"/> Play</button>
-          <button className={styles.button}  onClick={click('save')}><span className="fa fa-check"/> Send</button>
+          <button className={styles.button}  onClick={this.onClickSend}><span className="fa fa-check"/> Send</button>
           <button className={styles.button}  onClick={click('reset')}><span className="fa fa-undo"/> Reset</button>
         </div>
       );
