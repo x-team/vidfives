@@ -2,6 +2,7 @@ var formidable = require('formidable');
 var fs = require('fs');
 var path = require('path');
 var cuid = require('cuid');
+var processVideo = require('../lib/process-video');
 
 function sanitizeFilename (filename) {
   // strip out any characters outside the whitelist
@@ -54,8 +55,13 @@ module.exports = function (router, appConfig) {
           return;
         }
 
-        res.writeHead(200, {'content-type': 'application/json'});
-        res.end(JSON.stringify({ id: id }));
+        processVideo({
+          dir: appConfig.uploadsDir,
+          id: id
+        }, function (err) {
+          res.writeHead(200, {'content-type': 'application/json'});
+          res.end(JSON.stringify({ id: id }));
+        });
       });
 
       req.on('error', function (err) {

@@ -74,6 +74,10 @@ const App = React.createClass({
     const videoBlob = videoRecorder.getBlob();
     const audioBlob = audioRecorder.getBlob();
 
+    this.setState({
+      stage: 'saveInProgress'
+    });
+
     const formData = new window.FormData();
     formData.append('webm', videoBlob);
     formData.append('wav', audioBlob);
@@ -146,6 +150,8 @@ const App = React.createClass({
   },
 
   renderRecorder () {
+    if (this.state.savedId) { return null; }
+
     const props = {
       stream: this.state.mediaStream,
       videoUrl: this.state.videoUrl,
@@ -172,6 +178,10 @@ const App = React.createClass({
     switch (this.state.stage) {
     case 'recording':
       props.isRecording = true;
+      break;
+
+    case 'saveInProgress':
+      props.saveInProgress = true;
       break;
     }
 
