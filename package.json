@@ -9,6 +9,7 @@
     "prebuild": "npm run clean && mkdir -p dist",
     "build": "cp -R src/assets/* dist/ && cp node_modules/recordrtc/RecordRTC.min.js ./dist/js/ && npm run build-js",
     "build-js": "watchify -v -d -t babelify -p [ css-modulesify -o dist/main-home.css ] -o dist/main-home.js src/main-home.js",
+    "build-js-prod": "browserify -t babelify -p [ css-modulesify -o dist/main-home.css ] src/main-home.js | uglifyjs > dist/main-home.js",
     "lint": "eslint src/ routes/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -31,6 +32,7 @@
     "css-modulesify": "^0.3.3",
     "eslint": "^0.24.1",
     "eslint-plugin-react": "^2.7.0",
+    "uglifyjs": "^2.4.10",
     "watchify": "^3.2.3"
   }
 }
