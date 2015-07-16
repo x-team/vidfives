@@ -76,10 +76,8 @@ const App = React.createClass({
     };
 
     xhr(opts, function (err, res, body) {
-      if (err) {
-        console.error(err);
+      if (err || res.statusCode !== 200) {
         alert('Sorry, sending to slack failed. Try sharing the link manually instead.');
-        return;
       }
 
       self.setState({ savedId });

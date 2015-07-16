@@ -16,8 +16,10 @@ module.exports = function (router, appConfig) {
         username: 'vidfives-bot'
       };
 
-      slack.api('chat.postMessage', slackOpts, function (err) {
-        if (err) {
+      slack.api('chat.postMessage', slackOpts, function (err, apiRes) {
+        if (err || !apiRes.ok) {
+          console.log('slack send', err, apiRes);
+
           res.statusCode = 500;
           return res.end('error');
         }
