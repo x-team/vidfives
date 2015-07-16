@@ -36,6 +36,7 @@ footer a {
 
 .thevideo {
   margin: 20px 0px;
+  width: 100%;
 }
 
 .column,
@@ -49,6 +50,9 @@ footer a {
   .container {
     width: 85%;
     padding: 0; }
+  .thevideo {
+    width: 320px;
+  }
 }
 
 /* For devices larger than 550px */
