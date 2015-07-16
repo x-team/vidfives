@@ -34,6 +34,10 @@ footer a {
   display:none;
 }
 
+.thevideo {
+  margin: 20px 0px;
+}
+
 .column,
 .columns {
   width: 100%;
