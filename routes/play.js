@@ -12,12 +12,12 @@ function createTpl (id) {
         h('h5', 'Your day just got better.')
       ]),
 
-      h('video', { controls: true }, [
+      h('video.thevideo', { controls: true, poster: '../src/assets/poster.jpg' }, [
         h('source', {
           width: 320,
           height: 240,
           src: '/mp4/' + id
-        })
+        }),
       ]),
 
       h('h6', [
