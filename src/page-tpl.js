@@ -25,8 +25,6 @@ module.exports = function (contentElems) {
       stylesheet('//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'),
       stylesheet('/style.css'),
       stylesheet('/main-home.css'),
-      stylesheet('/dialog.css'),
-      stylesheet('/dialog-sandra.css'),
       script('/js/modernizr.custom.js')
     ]),
     h('body', contentElems || [])
