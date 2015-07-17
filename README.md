@@ -15,6 +15,12 @@ Clone the repo, then:
 
 - run: `source my-env && npm start`
 
+If you want to automatically rebuild js / css, set the `WATCH` environment variable:
+
+```
+WATCH=1 npm run build-js
+```
+
 Config
 ----
 
