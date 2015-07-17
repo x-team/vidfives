@@ -40,6 +40,13 @@ When you `npm run build` the `dist/` directory is populated from `src/assets/`. 
 
 Static assets are served directly from `dist/`, so if you have an image `src/assets/foo.png`, your html would link to it as `<img src="/foo.png" />`.
 
+Contributing
+----
+
+Pull requests very welcome! Please explain clearly what your PR does, and if it involves multiple features consider splitting into separate PRs.
+
+Also make sure `npm run lint` passes.
+
 License
 ----
 
