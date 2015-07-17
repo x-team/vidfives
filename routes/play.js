@@ -1,5 +1,3 @@
-var fs = require('fs');
-var path = require('path');
 var ecstatic = require('ecstatic');
 
 var h = require('hyperscript');
@@ -17,12 +15,12 @@ function createTpl (id) {
           width: 320,
           height: 240,
           src: '/mp4/' + id
-        }),
+        })
       ]),
 
       h('h6', [
         h('strong', 'Your turn: '),
-        'Send someone else a /vidfive and make their day.',
+        'Send someone else a /vidfive and make their day.'
       ]),
 
       h('a._controls__button', { href: '/' }, 'Send a /vidfive'),
@@ -34,7 +32,7 @@ function createTpl (id) {
           ' by ',
           h('a', { href: 'http://x-team.com' }, 'X-Team')
         ])
-      ]),
+      ])
     ])
   ]);
 }

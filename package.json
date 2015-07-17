@@ -10,7 +10,7 @@
     "build": "cp -R src/assets/* dist/ && cp node_modules/recordrtc/RecordRTC.min.js ./dist/js/ && npm run build-js",
     "build-js": "watchify -v -d -t babelify -p [ css-modulesify -o dist/main-home.css ] -o dist/main-home.js src/main-home.js",
     "build-js-prod": "browserify -t babelify -p [ css-modulesify -o dist/main-home.css ] src/main-home.js | uglifyjs > dist/main-home.js",
-    "lint": "eslint src/ routes/",
+    "lint": "eslint src/ routes/ lib/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "joshwnj",

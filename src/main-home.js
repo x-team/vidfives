@@ -43,6 +43,7 @@ const App = React.createClass({
         audioRecorder: setupAudioRecorder(stream)
       });
     }, function (err) {
+      console.error(err);
       alert('Sorry, video capture is not supported in your browser');
     });
   },
@@ -75,7 +76,7 @@ const App = React.createClass({
       url: `/send/${slackname}/${savedId}`
     };
 
-    xhr(opts, function (err, res, body) {
+    xhr(opts, function (err, res) {
       if (err || res.statusCode !== 200) {
         alert('Sorry, sending to slack failed. Try sharing the link manually instead.');
       }

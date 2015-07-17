@@ -4,11 +4,6 @@ var path = require('path');
 var cuid = require('cuid');
 var processVideo = require('../lib/process-video');
 
-function sanitizeFilename (filename) {
-  // strip out any characters outside the whitelist
-  return filename.replace(/[^\.a-zA-Z0-9_\,\~\-]+/g, '');
-}
-
 var allowedFileTypes = ['.wav', '.webm'];
 
 module.exports = function (router, appConfig) {
@@ -58,7 +53,12 @@ module.exports = function (router, appConfig) {
         processVideo({
           dir: appConfig.uploadsDir,
           id: id
-        }, function (err) {
+        }, function (err2) {
+          // TOOD: work out best way to handle this error
+          if (err2) {
+            console.error(err2);
+          }
+
           res.writeHead(200, {'content-type': 'application/json'});
           res.end(JSON.stringify({ id: id }));
         });

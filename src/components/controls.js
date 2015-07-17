@@ -43,8 +43,8 @@ module.exports = React.createClass({
           <input className={styles.slackname} ref="slackname" placeholder="Enter Slack username of recipient here."/>
 
           <button className={styles.button} onClick={click('play')}><span className="fa fa-play"/> Play</button>
-          <button className={styles.button}  onClick={this.onClickSend}><span className="fa fa-check"/> Send</button>
-          <button className={styles.button}  onClick={click('reset')}><span className="fa fa-undo"/> Reset</button>
+          <button className={styles.button} onClick={this.onClickSend}><span className="fa fa-check"/> Send</button>
+          <button className={styles.button} onClick={click('reset')}><span className="fa fa-undo"/> Reset</button>
         </div>
       );
     }

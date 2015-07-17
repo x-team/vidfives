@@ -7,7 +7,7 @@ function stylesheet (href) {
     href: href,
     rel: 'stylesheet',
     type: 'text/css'
-  })
+  });
 }
 
 function script (src) {

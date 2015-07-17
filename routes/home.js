@@ -13,16 +13,15 @@ var tpl = require('../src/page-tpl')([
         ' by ',
         h('a', { href: 'http://x-team.com' }, 'X-Team')
       ])
-    ]),
+    ])
   ]),
   h('script', { src: '/js/RecordRTC.min.js' }),
   h('script', { src: '/main-home.js' })
 ]);
 
-module.exports = function (router, appConfig) {
+module.exports = function (router) {
   router.set('/', {
-    GET: function (req, res, opts) {
-      var id = opts.params.id;
+    GET: function (req, res) {
       res.writeHead(200, {
         'Content-Type': 'text/html'
       });

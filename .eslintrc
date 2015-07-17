@@ -12,6 +12,7 @@
       2,
       "unix"
     ],
+    "no-alert": 0,
     "semi": [
       2,
       "always"
