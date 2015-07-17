@@ -5,7 +5,10 @@ module.exports = React.createClass({
   displayName: 'Controls',
 
   propTypes: {
-    action: React.PropTypes.func.isRequired
+    action: React.PropTypes.func.isRequired,
+    hasRecorded: React.PropTypes.bool,
+    isRecording: React.PropTypes.bool,
+    saveInProgress: React.PropTypes.bool
   },
 
   getDefaultProps () {
