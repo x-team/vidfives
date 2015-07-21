@@ -15,6 +15,7 @@
   "author": "joshwnj",
   "license": "MIT",
   "dependencies": {
+    "async": "^1.4.0",
     "ecstatic": "^0.8.0",
     "ffmpeg-static": "^1.0.0",
     "formidable": "^1.0.17",

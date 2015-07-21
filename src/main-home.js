@@ -107,7 +107,7 @@ const App = React.createClass({
       body: formData
     };
     xhr(opts, function (err, res, body) {
-      if (err) {
+      if (err || res.statusCode !== 200) {
         console.error(err);
         alert('Sorry, upload not working rn :(');
         return;

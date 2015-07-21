@@ -12,6 +12,12 @@ module.exports = function (router, appConfig) {
       var form = new formidable.IncomingForm();
       var id = cuid();
 
+      form.on('error', function (err) {
+        console.error('form error', {
+          err: err
+        });
+      });
+
       form.onPart = function(part) {
         // formidable can handle any non-file parts
         if(!part.filename) {
@@ -37,10 +43,13 @@ module.exports = function (router, appConfig) {
           });
         });
 
+        part.on('end', function () {
+          console.log('WROTE', targetFilename);
+        });
         part.pipe(out);
       };
 
-      form.parse(req, function (err) {
+      form.parse(req, function (err, fields, files) {
         if (err) {
           console.error('error parsing form', {
             err: err
@@ -49,7 +58,9 @@ module.exports = function (router, appConfig) {
           res.end('error');
           return;
         }
+      });
 
+      form.on('end', function () {
         processVideo({
           dir: appConfig.uploadsDir,
           id: id
@@ -57,6 +68,8 @@ module.exports = function (router, appConfig) {
           // TOOD: work out best way to handle this error
           if (err2) {
             console.error(err2);
+            res.writeHead(500);
+            return res.end('error');
           }
 
           res.writeHead(200, {'content-type': 'application/json'});
