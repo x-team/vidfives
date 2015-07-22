@@ -5,7 +5,10 @@ var path = require('path');
 var cuid = require('cuid');
 var processVideo = require('../lib/process-video');
 
-var allowedFileTypes = ['.wav', '.webm'];
+var extByType = {
+  'audio/wav': 'wav',
+  'video/webm': 'webm'
+};
 
 module.exports = function (router, appConfig) {
   router.set('/upload', {
@@ -30,11 +33,6 @@ module.exports = function (router, appConfig) {
           return res.end('error');
         }
       });
-
-      var extByType = {
-        'audio/wav': 'wav',
-        'video/webm': 'webm'
-      };
 
       form.on('end', function (fields, files) {
         var tasks = this.openedFiles.map(function (f) {
@@ -65,6 +63,7 @@ module.exports = function (router, appConfig) {
 
         async.series(tasks, function (err, results) {
           if (err) {
+            console.error('[%s] error', id, err);
             res.statusCode = 500;
             return res.end('error');
           }
