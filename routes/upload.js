@@ -1,3 +1,4 @@
+var async = require('async');
 var formidable = require('formidable');
 var fs = require('fs');
 var path = require('path');
@@ -12,42 +13,13 @@ module.exports = function (router, appConfig) {
       var form = new formidable.IncomingForm();
       var id = cuid();
 
+      console.log('[%s] upload started', id);
+
       form.on('error', function (err) {
         console.error('form error', {
           err: err
         });
       });
-
-      form.onPart = function(part) {
-        // formidable can handle any non-file parts
-        if(!part.filename) {
-          return form.handlePart(part);
-        }
-
-        var ext = '.' + part.name;
-        if (allowedFileTypes.indexOf(ext) === -1) {
-          res.statusCode = 500;
-          return res.end('invalid file type');
-        }
-
-        var targetFilename = id + ext;
-
-        // TODO: validate file data
-        // ...
-
-        var out = fs.createWriteStream(path.join(appConfig.uploadsDir, targetFilename), { flags: 'w+' });
-        out.on('error', function (err) {
-          console.error('error writing upload', {
-            err: err,
-            part: part
-          });
-        });
-
-        part.on('end', function () {
-          console.log('WROTE', targetFilename);
-        });
-        part.pipe(out);
-      };
 
       form.parse(req, function (err, fields, files) {
         if (err) {
@@ -55,37 +27,52 @@ module.exports = function (router, appConfig) {
             err: err
           });
           res.writeHead(500, {'content-type': 'text/plain'});
-          res.end('error');
-          return;
+          return res.end('error');
         }
       });
 
-      form.on('end', function () {
-        processVideo({
-          dir: appConfig.uploadsDir,
-          id: id
-        }, function (err2) {
-          // TOOD: work out best way to handle this error
-          if (err2) {
-            console.error(err2);
-            res.writeHead(500);
+      var extByType = {
+        'audio/wav': 'wav',
+        'video/webm': 'webm'
+      };
+
+      form.on('end', function (fields, files) {
+        var tasks = this.openedFiles.map(function (f) {
+          return function (next) {
+            var tmp = f.path;
+            var name = f.name;
+            var ext = extByType[f.type];
+            if (!ext) {
+              return next(new Error('Invalid type: %d', f.type));
+            }
+
+            var targetFilename = id + '.' + ext;
+            var dest = path.join(appConfig.uploadsDir, targetFilename);
+
+            // move the uploaded file to our uploads dir
+            fs.rename(tmp, dest, next);
+          };
+        });
+
+        tasks.push(function (next) {
+          console.log('[%s] processing started', id);
+
+          processVideo({
+            dir: appConfig.uploadsDir,
+            id: id
+          }, next);
+        });
+
+        async.series(tasks, function (err, results) {
+          if (err) {
+            res.statusCode = 500;
             return res.end('error');
           }
 
+          console.log('[%s] processing completed', id);
           res.writeHead(200, {'content-type': 'application/json'});
           res.end(JSON.stringify({ id: id }));
         });
-      });
-
-      req.on('error', function (err) {
-        console.error('request error', {
-          err: err
-        });
-        res.end();
-      });
-
-      req.on('aborted', function () {
-        res.end();
       });
     }
   });

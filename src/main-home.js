@@ -104,11 +104,12 @@ const App = React.createClass({
     const opts = {
       method: 'POST',
       url: '/upload',
-      body: formData
+      body: formData,
+      timeout: 120 * 1000
     };
     xhr(opts, function (err, res, body) {
       if (err || res.statusCode !== 200) {
-        console.error(err);
+        console.error(err, res);
         alert('Sorry, upload not working rn :(');
         return;
       }
@@ -125,6 +126,7 @@ const App = React.createClass({
         self.setState({ savedId });
       }
     });
+
   },
 
   onControlsAction (type, args) {
