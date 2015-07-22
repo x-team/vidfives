@@ -15,32 +15,18 @@ module.exports = React.createClass({
   getDefaultProps () {
     return {
       saveInProgress: false,
+      hasRecorded: false,
       hasVideoUrl: false,
       isRecording: false
     };
   },
 
-  getInitialState () {
-    return {
-      hasRecorded: false
-    };
-  },
-
-  onClickSend: function (event) {
+  onClickSend (event) {
     event.preventDefault();
 
     const slacknameNode = this.refs.slackname.getDOMNode();
     const slackname = slacknameNode.value;
     this.props.action('save', { slackname });
-  },
-
-  onClickStop: function (event) {
-    event.preventDefault();
-
-    this.setState({
-      hasRecorded: true
-    });
-    this.props.action('stop');
   },
 
   render () {
@@ -56,7 +42,7 @@ module.exports = React.createClass({
       return <h6 className={styles.progress}>Saving in progress...</h6>;
     }
 
-    if (this.state.hasRecorded) {
+    if (this.props.hasRecorded) {
       return (
         <div>
           <input className={styles.slackname} ref="slackname" placeholder="Enter Slack username of recipient here."/>
@@ -69,7 +55,7 @@ module.exports = React.createClass({
     }
 
     return this.props.isRecording ?
-      <button className={styles.button} onClick={this.onClickStop}><span className="fa fa-stop"/> Stop</button> :
+      <button className={styles.button} onClick={click('stop')}><span className="fa fa-stop"/> Stop</button> :
       <button className={styles.button} onClick={click('startRecording')} disabled={!this.props.hasMediaStream}><span className="fa fa-video-camera"/> Record</button>;
   }
 });

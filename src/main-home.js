@@ -1,5 +1,6 @@
 import React from 'react';
 import Controls from './components/controls';
+import Countdown from './components/countdown';
 import Recorder from './components/recorder';
 import Dialog from './components/dialog';
 
@@ -25,6 +26,7 @@ const App = React.createClass({
 
   getInitialState () {
     return {
+      countdown: null,
       stage: 'init',
       savedId: null
     };
@@ -52,6 +54,23 @@ const App = React.createClass({
     this.state.videoRecorder.startRecording();
     this.state.audioRecorder.startRecording();
     this.setState({ stage: 'recording' });
+
+    // start countdown
+    const self = this;
+    const interval = setInterval(function () {
+      if (self.state.countdown === 1) {
+        return self.stopRecording();
+      }
+
+      self.setState({
+        countdown: self.state.countdown - 1
+      });
+    }, 1000);
+
+    this.setState({
+      countdown: 10,
+      countdownInterval: interval
+    });
   },
 
   stopRecording () {
@@ -66,7 +85,11 @@ const App = React.createClass({
       self.setState({ videoUrl });
     });
 
-    this.setState({ stage: 'recordingComplete' });
+    clearInterval(this.state.countdownInterval);
+    this.setState({
+      stage: 'recordingComplete',
+      countdown: null
+    });
   },
 
   send ({ slackname, savedId }) {
@@ -188,6 +211,7 @@ const App = React.createClass({
 
     switch (this.state.stage) {
     case 'recordingComplete':
+    case 'saveInProgress':
       delete props.stream;
       break;
 
@@ -197,6 +221,15 @@ const App = React.createClass({
     }
 
     return <Recorder {...props} />;
+  },
+
+  renderCountdown () {
+    if (this.state.countdown === null) { return null; }
+
+    const props = {
+      countdown: this.state.countdown
+    };
+    return <Countdown {...props} />;
   },
 
   renderControls () {
@@ -210,6 +243,12 @@ const App = React.createClass({
     switch (this.state.stage) {
     case 'recording':
       props.isRecording = true;
+      break;
+
+    case 'recordingComplete':
+    case 'playing':
+      props.hasRecorded = true;
+      props.isRecording = false;
       break;
 
     case 'saveInProgress':
@@ -231,6 +270,7 @@ const App = React.createClass({
     return (
       <div>
         {this.renderRecorder()}
+        {this.renderCountdown()}
         {this.renderControls()}
         {this.renderDialog()}
       </div>

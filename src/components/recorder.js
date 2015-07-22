@@ -48,7 +48,9 @@ module.exports = React.createClass({
     }
     // otherwise just set the video url to the media stream
     else if (props.stream) {
-      videoNode.src = window.URL.createObjectURL(props.stream);
+      if (!videoNode.src) {
+        videoNode.src = window.URL.createObjectURL(props.stream);
+      }
       videoNode.play();
     }
     // if there's no attached media stream, pause the playback
@@ -59,7 +61,7 @@ module.exports = React.createClass({
 
   render () {
     return (
-      <div className={styles.root}>
+      <div ref="root" className={styles.root}>
         <video className={styles.video} ref="video" autoPlay={false} muted={true} />
         <audio style={{display: 'none'}} ref="audio" autoPlay={false} />
       </div>
