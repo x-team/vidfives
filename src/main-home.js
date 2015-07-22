@@ -105,7 +105,7 @@ const App = React.createClass({
       method: 'POST',
       url: '/upload',
       body: formData,
-      timeout: 120 * 1000
+      timeout: 480 * 1000
     };
     xhr(opts, function (err, res, body) {
       if (err || res.statusCode !== 200) {
@@ -202,7 +202,11 @@ const App = React.createClass({
   renderControls () {
     if (this.state.savedId) { return null; }
 
-    const props = {};
+    const props = {
+      hasMediaStream: !!this.state.mediaStream,
+      hasVideoUrl: !!this.state.videoUrl
+    };
+
     switch (this.state.stage) {
     case 'recording':
       props.isRecording = true;
@@ -211,10 +215,6 @@ const App = React.createClass({
     case 'saveInProgress':
       props.saveInProgress = true;
       break;
-    }
-
-    if (this.state.videoUrl) {
-      props.hasRecorded = true;
     }
 
     return <Controls {...props } action={this.onControlsAction} />;

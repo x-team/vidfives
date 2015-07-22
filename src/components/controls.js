@@ -6,7 +6,8 @@ module.exports = React.createClass({
 
   propTypes: {
     action: React.PropTypes.func.isRequired,
-    hasRecorded: React.PropTypes.bool,
+    hasMediaStream: React.PropTypes.bool,
+    hasVideoUrl: React.PropTypes.bool,
     isRecording: React.PropTypes.bool,
     saveInProgress: React.PropTypes.bool
   },
@@ -14,8 +15,14 @@ module.exports = React.createClass({
   getDefaultProps () {
     return {
       saveInProgress: false,
-      hasRecorded: false,
+      hasVideoUrl: false,
       isRecording: false
+    };
+  },
+
+  getInitialState () {
+    return {
+      hasRecorded: false
     };
   },
 
@@ -25,6 +32,15 @@ module.exports = React.createClass({
     const slacknameNode = this.refs.slackname.getDOMNode();
     const slackname = slacknameNode.value;
     this.props.action('save', { slackname });
+  },
+
+  onClickStop: function (event) {
+    event.preventDefault();
+
+    this.setState({
+      hasRecorded: true
+    });
+    this.props.action('stop');
   },
 
   render () {
@@ -40,20 +56,20 @@ module.exports = React.createClass({
       return <h6 className={styles.progress}>Saving in progress...</h6>;
     }
 
-    if (this.props.hasRecorded) {
+    if (this.state.hasRecorded) {
       return (
         <div>
           <input className={styles.slackname} ref="slackname" placeholder="Enter Slack username of recipient here."/>
 
           <button className={styles.button} onClick={click('play')}><span className="fa fa-play"/> Play</button>
-          <button className={styles.button} onClick={this.onClickSend}><span className="fa fa-check"/> Send</button>
+          <button className={styles.button} onClick={this.onClickSend} disabled={!this.props.hasVideoUrl}><span className="fa fa-check"/> Send</button>
           <button className={styles.button} onClick={click('reset')}><span className="fa fa-undo"/> Reset</button>
         </div>
       );
     }
 
     return this.props.isRecording ?
-      <button className={styles.button} onClick={click('stop')}><span className="fa fa-stop"/> Stop</button> :
-      <button className={styles.button} onClick={click('startRecording')}><span className="fa fa-video-camera"/> Record</button>;
+      <button className={styles.button} onClick={this.onClickStop}><span className="fa fa-stop"/> Stop</button> :
+      <button className={styles.button} onClick={click('startRecording')} disabled={!this.props.hasMediaStream}><span className="fa fa-video-camera"/> Record</button>;
   }
 });
