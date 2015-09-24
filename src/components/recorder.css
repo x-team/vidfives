@@ -1,5 +1,8 @@
 .root {
   margin: 40px 0px;
+}
+
+:global(.question) .root {
   float: left;
   width: 50%;
 }

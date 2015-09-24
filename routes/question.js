@@ -4,7 +4,7 @@ var path = require('path');
 
 function renderTemplate (info) {
   return require('../src/page-tpl')([
-    h('.container', [
+    h('.container.question', [
       h('header', [
         h('h1', 'Hey ' + info.recipient.name + '! ' + info.sender.name + ' would like to ask you:'),
         h('h3', info.question)
