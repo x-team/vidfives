@@ -295,10 +295,10 @@ const App = React.createClass({
 
   renderPrompt () {
     const msg = (this.state.stage === 'init') ?
-          'Record your answer below!' :
+          'Your response' :
           ''
 
-    return <p>{msg}</p>;
+    return <h5>{msg}</h5>;
   },
 
   render () {

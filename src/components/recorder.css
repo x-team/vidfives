@@ -1,5 +1,7 @@
 .root {
   margin: 40px 0px;
+  float: left;
+  width: 50%;
 }
 
 .video {

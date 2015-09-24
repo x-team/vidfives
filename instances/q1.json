@@ -1,0 +1,14 @@
+{
+  "recipient": {
+    "name": "Nadeem",
+    "slackId": "nadeemkhedr"
+  },
+
+  "sender": {
+    "name": "Ryan",
+    "slackId": "ryanchartrand"
+  },
+
+  "question": "What made you want to become a developer?",
+  "maxTime": 30
+}

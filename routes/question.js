@@ -6,8 +6,12 @@ function renderTemplate (info) {
   return require('../src/page-tpl')([
     h('.container', [
       h('header', [
-        h('h1', 'Hi ' + info.recipient.name + ', ' + info.sender.name + ' would like to ask you:'),
-        h('h5', info.question)
+        h('h1', 'Hey ' + info.recipient.name + '! ' + info.sender.name + ' would like to ask you:'),
+        h('h3', info.question)
+      ]),
+      h('.senderResponse', [
+        h('h5', 'Ryan\'s response'),
+        h('video', { src: '/questionvids/q1.webm' }, 'controls')
       ]),
       h('#root'),
       h('footer', [
