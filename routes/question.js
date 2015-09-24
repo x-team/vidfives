@@ -11,7 +11,10 @@ function renderTemplate (info) {
       ]),
       h('.senderResponse', [
         h('h5', 'Ryan\'s response'),
-        h('video', { src: '/questionvids/q1.webm' }, 'controls')
+        h('video', {
+          src: '/questionvids/' + info.id + '.webm',
+          controls: true
+        })
       ]),
       h('#root'),
       h('footer', [
@@ -59,7 +62,8 @@ function fetchInstance (id, cb) {
       return cb(err);
     }
 
-    return cb(null, info)
+    info.id = id;
+    return cb(null, info);
   })
 }
 
@@ -70,7 +74,7 @@ module.exports = function (router) {
       fetchInstance(id, function (err, info) {
         if (err) { return handleError(res, err); }
 
-        handleInfo(res, info);
+        handleInfo(res, info, id);
       })
     }
   });
