@@ -47,5 +47,8 @@ require('./routes/upload')(router, config);
 require('./routes/play')(router, config);
 require('./routes/send')(router, config);
 
+// special route for asking questions
+require('./routes/question')(router, config);
+
 server.listen(config.port);
 console.log('Ready on http://localhost:%d', config.port);

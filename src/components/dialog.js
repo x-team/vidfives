@@ -23,12 +23,8 @@ module.exports = React.createClass({
       <div className="dialog dialog--open">
         <div className="dialog__overlay"></div>
         <div className="dialog__content">
-          <h2><strong>Awesome</strong>, your /vidfive was sent.</h2>
-          <p>You can also share it manually with <a href={playUrl}>this link</a></p>
-          <div>
-            <button className={styles.button} onClick={click('another')}>Send another!</button>
-            <button className={styles.button} onClick={click('close')}>Close</button>
-          </div>
+          <h2><strong>Thanks</strong> for your answer.</h2>
+          <p>Why not <a href="/">send a /vidfive</a> of your own?</p>
         </div>
       </div>
     );

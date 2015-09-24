@@ -1,0 +1,14 @@
+{
+  "recipient": {
+    "name": "Mr. Foo",
+    "slackId": "mrfoo"
+  },
+
+  "sender": {
+    "name": "Josh",
+    "slackId": "josh"
+  },
+
+  "question": "Are there hats?",
+  "maxTime": 5
+}
