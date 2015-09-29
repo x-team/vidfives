@@ -24,7 +24,7 @@ module.exports = React.createClass({
         <div className="dialog__overlay"></div>
         <div className="dialog__content">
           <h2><strong>Thanks</strong> for your answer.</h2>
-          <p>Why not <a href="/">send a /vidfive</a> of your own?</p>
+          <p>Why not <a href="/">send a /vidfive</a> to someone?</p>
         </div>
       </div>
     );
