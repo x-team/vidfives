@@ -33,6 +33,6 @@
     "css-modulesify": "^0.3.3",
     "eslint": "^0.24.1",
     "eslint-plugin-react": "^2.7.0",
-    "monobrow": "^1.1.3"
+    "monobrow": "^2.0.0"
   }
 }
